@@ -1,10 +1,99 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
+    <head>
+        <title>Aplication</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
+        <script src="js/script.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </head>
+    <body>
+      <div class="container">
+          <!-- <form method="post" id="form">
+            <div class="image"> -->
+            <!-- <div id="loadingImage"><img src="img/burger.gif"></div> -->
+            <h3>Get recep!</h3>
 
-  </body>
+            <form id ="image_upload_form" action="" method="post" enctype="multipart/form-data">
+              <input id ="id_iamge" type="file" name="image" />
+              <img id='blah' src='#' alt="your image"/>
+              <input type="submit" value="Upload" />
+          </form>
+          
+          <div id="image_view">
+              <img id="uploaded_image">
+          </div>
+          <img id="uploaded_image" src="random_image.jpg" />
+          
+
+
+            <!-- <a href="#" onclick="logoutFB()">Logout</a>
+                <p class="form">
+                    <input type="text" id="path"/>
+                    <label class="add-photo-btn">Chose Image<input type="file" id="myfile" name="myfile"></label>
+                  </p>
+                  <!-- <div class="btn" onclick="logoutFB()">Logout</div> -->
+                 <input type="button" value="Submit" id="submit">
+                  <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>             -->
+        </div>   
+        <!-- <div class="login-form" id="login">
+            <input class="btn" type="button" value="Login with facebook" id="send" onclick="loginFB()">
+          <!-- <div class="btn" onclick="loginFB()">Login with facebook</div> -->
+        </div>
+     </div>
+     <div class="c10"></div>
+     
+    </div>
+    <div class="result">
+        <div class="show">
+          <div class="view-image" id="image">
+            
+          </div>
+        </div>
+        <div class="list"></div>
+      </div>
+<script>
+$(document).ready(function() {
+    $("#id_image").change(file_select);
+});
+
+function file_select(event) {
+    $("#uploaded_image").attr("src", $("#id_image").val());
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$('#id_iamge').change(function() {
+  console.log('halo')
+  readURL(this)
+  // return false
+})
+
+// $('#myfile').change(function(){
+        //   $('#path').val($(this).val())
+        // })
+        // $('#form').submit(function(){
+        //   console.log(document.querySelector('#path').val())
+        //   return false
+        // })
+        // $('#send').click(function(){
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: 'http://localhost:3000/images',
+        //         data: $('#form').serialize(),
+        //         success: function(data) {
+        //             // setTimeout(function(){ $("#loadingImage").hide(1000) }, 3000);
+        //           }
+        //   });
+        // })
+        // </script>
+      </body>
 </html>
