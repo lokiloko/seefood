@@ -22,7 +22,7 @@ List of watson routes
 
 | Routes       | Method | Description | Required Param |
 |--------------|--------|-------------|----------------|
-|/api/watson/  |Post    |Analyze image uploaded        |-               |
+|/api/watson/  |Post    |Analyze image uploaded        | <ul><li>Choose One</li><li>[ ] image_url (string) </li><li>[ ] image_files (files)</li></ul>              |
 
 List of youtube routes
 
