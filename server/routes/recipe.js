@@ -1,10 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const RecipeCtrl = require('../models/recipe.js')
+const RecipeCtrl = require('../controllers/recipe.js')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('recipe')
+router.get('/:foodname', function(req, res, next) {
+  RecipeCtrl.getListRecipeByName(req, res)
+  //res.send('recipe')
 });
+
+router.get('/:foodname/:page', function(req, res, next){
+  RecipeCtrl.getListRecipeByName(req, res)
+})
 
 module.exports = router;
