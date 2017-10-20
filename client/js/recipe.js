@@ -30,9 +30,9 @@ function generateStar(score){
             for (var index in recipes) {
               content= null;
               content='<div class="col-lg-4 mb-2"><div class="card-deck"><div class="card pt-4 pb-2">';
-              content+=`<img class="card-img-top" src="${recipes[index].image_url}" alt="${recipes[index].title}">`;
-              content+=`<h4 class="card-title pl-2 pt-2 pr-2"><a href="${recipes[index].source_url}">${recipes[index].title}</a></h4>`;
-              content+=`<p class="pl-4 text-white card-text bg-success "><small>Rating : ${generateStar(recipes[index].social_rank)}</small></p>`;
+              content+=`<a href="${recipes[index].source_url}"><img class="card-img-top" src="${recipes[index].image_url}" alt="${recipes[index].title}">`;
+              content+=`<h4 class="card-title pl-2 pt-2 pr-2">${recipes[index].title}</h4>`;
+              content+=`<p class="pl-4 text-white card-text bg-success "><small>Rating : ${generateStar(recipes[index].social_rank)}</small></p></a>`;
               // console.log(element);
               // console.log(content);
             element.innerHTML+=content;

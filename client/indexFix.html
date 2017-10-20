@@ -1,114 +1,151 @@
 <html>
-    <head>
-        <title>Aplication</title>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>        
-        <script src="js/script.js"></script>
-        <script src="js/recipe.js"></script>        
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-    </head>
-    <body>
-      <div class="container">
-            <h3>Get recep!</h3>
-            <h2 id='foodName'></h2>
-            <form id ="image_upload_form" action="" method="post" enctype="multipart/form-data">
-              <input id ="id_image" type="file" name="image" />
-              <input id="url_image" type="text" name="imageURL">
-              <input type="submit" value="Upload" />
+
+<head>
+  <title>Aplication</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css  ">
+  <script src="js/script.js"></script>
+  <script src="js/recipe.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 bg-faded sidebar">
+        <div class="container">
+          <h1 class="text-success">Seefood!</h1>
+          <h3 class="text-muted">Get Your Recipe Here</h3>
+          <h2 id='foodName'></h2>
+          <form id="image_upload_form" action="" method="post" enctype="multipart/form-data">
+            <input id="id_image" type="file" name="image" />
+            <input id="url_image" type="text" name="imageURL">
+            <input type="submit" value="Upload" />
           </form>
           <div id="image_view">
-              <img id="uploaded_image">
+            <img width="200" height="200" id="uploaded_image">
           </div>
-          <img id='blah' src='#'/>
-          <iframe id="youriframe" width="640" height="360" ></iframe>
+          <img id='blah' src='#' />
+          <iframe id="youriframe" width="300" height="300"></iframe>
+        </div>
+      </div>
+      <div class="col-lg">
+
+        <div id="recipe-list" class="row mb-4">
+          <!--      <div class="col-lg-4 ">
+          <div class="card-deck">
+            <div class="card pt-4 pb-2">
+              <img class="card-img-top" src="http://static.food2fork.com/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg" alt="Cauliflower Pizza Crust (with BBQ Chicken Pizza)">
+              <h4 class="card-title pl-2 pt-2 pr-2">Cauliflower Pizza Crust (with BBQ Chicken Pizza)</h4>
+              <p class="card-text pl-2 pt-2 pr-2">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="pl-4 text-white card-text bg-success "><small>Rating : <i class="fa fa-star" aria-hidden="true"></i></small></p>
+            </div>
+          </div>
+        </div>-->
+
+
+        </div>
+
+      </div>
     </div>
-    <div id="recipe-list" class="row mb-4">
-    </div>   
-<script>
-function getRecipe(foodName){
-  $.get('http://localhost:3000/api/recipe/'+foodName+'/').done(function(data){
-     console.log(data);
-    // console.log('uluulu');
-    $('#recipe-list').recipeList(data.data)
-  }).fail(function(err){
-    console.log(err);
-  })
-}
-
-$(document).ready(function() {
-    $("#id_image").change(file_select);
-    $("#url_image").change(file_selectURL);
-});
-
-function file_select(event) {
-    $("#uploaded_image").attr("src", $("#id_image").val());
-}
-
-function file_selectURL(event) {
-    $("#uploaded_image").attr("src", $("#url_image").val());
-}
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$(document).on('submit', '#image_upload_form', function(e) {
-    e.preventDefault();
-    var formData = new FormData();
-    formData.append('section', 'general');
-    formData.append('action', 'previewImg');
-    // Attach file
-    formData.append('image_files', $('input[type=file]')[0].files[0]);
-    console.log(formData);
-    $.ajax({
-      url: 'http://localhost:3000/api/watson',
-      data: formData,
-      type: 'POST',
-      contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-      processData: false, // NEEDED, DON'T OMIT THIS
-      // ... Other options like success and etc
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(err) {
-        console.log(err);
+    <!-- <div id="recipe-list" class="row mb-4">
+    </div> -->
+    <script>
+      function getRecipe(foodName) {
+        $.get('http://localhost:3000/api/recipe/' + foodName + '/').done(function(data) {
+          console.log(data);
+          // console.log('uluulu');
+          $('#recipe-list').recipeList(data.data)
+        }).fail(function(err) {
+          console.log(err);
+        })
       }
-    });
-  })
 
-$('#url_image').change(function() {
-    var imageURL = document.getElementById("url_image").value
-    readURL(this)
-    axios.post('http://localhost:3000/api/watson', {
-        image_url: imageURL
-    })
-    .then(function (response) {
-        console.log(response);
-        console.log(response.data.class)
-        var foodName = response.data.class
-        getRecipe(foodName)
-        go_get(foodName)
-        document.getElementById("foodName").innerHTML = foodName;
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-})
+      $(document).ready(function() {
+        $("#id_image").change(file_select);
+        $("#url_image").change(file_selectURL);
+      });
 
-function go_get(name){
-     var base_url = 'http://www.youtube.com/embed?listType=search&list=';
-     var search_field = "how to " + name;
-     var target_url = base_url + search_field ;
-     var ifr = document.getElementById('youriframe') ;
-     ifr.src = target_url ;
-     return false ;
-    }
- </script>
-      </body>
+      function file_select(event) {
+        $("#uploaded_image").attr("src", $("#id_image").val());
+      }
+
+      function file_selectURL(event) {
+        $("#uploaded_image").attr("src", $("#url_image").val());
+      }
+
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      $(document).on('submit', '#image_upload_form', function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('section', 'general');
+        formData.append('action', 'previewImg');
+        // Attach file
+        formData.append('image_files', $('input[type=file]')[0].files[0]);
+        console.log(formData);
+        $.ajax({
+          url: 'http://localhost:3000/api/watson',
+          data: formData,
+          type: 'POST',
+          contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+          processData: false, // NEEDED, DON'T OMIT THIS
+          // ... Other options like success and etc
+          success: function(data) {
+            console.log(data);
+            var foodName = data.class
+            getRecipe(foodName)
+            go_get(foodName)
+            document.getElementById("foodName").innerHTML = foodName;
+          },
+          error: function(err) {
+            console.log(err);
+          }
+        });
+      })
+
+      $('#url_image').change(function() {
+        var imageURL = document.getElementById("url_image").value
+        readURL(this)
+        axios.post('http://localhost:3000/api/watson', {
+            image_url: imageURL
+          })
+          .then(function(response) {
+            console.log(response);
+            console.log(response.data.class)
+            var foodName = response.data.class
+            getRecipe(foodName)
+            go_get(foodName)
+            document.getElementById("foodName").innerHTML = foodName;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      })
+
+      function go_get(name) {
+        var base_url = 'http://www.youtube.com/embed?listType=search&list=';
+        var search_field = "how to " + name;
+        var target_url = base_url + search_field;
+        var ifr = document.getElementById('youriframe');
+        ifr.src = target_url;
+        return false;
+      }
+    </script>
+</body>
+
 </html>
