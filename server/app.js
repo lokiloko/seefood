@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
@@ -10,6 +11,7 @@ const recipe = require('./routes/recipe.js');
 const watson = require('./routes/watson.js');
 
 // parse application/x-www-form-urlencoded
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
