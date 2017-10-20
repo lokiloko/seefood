@@ -2,6 +2,7 @@
     <head>
         <title>Aplication</title>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>        
         <script src="js/script.js"></script>
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
@@ -11,9 +12,10 @@
             <div class="image"> -->
             <!-- <div id="loadingImage"><img src="img/burger.gif"></div> -->
             <h3>Get recep!</h3>
-
+            <h2 id='foodName'></h2>
             <form id ="image_upload_form" action="" method="post" enctype="multipart/form-data">
-              <input id ="id_iamge" type="file" name="image" />
+              <input id ="id_image" type="file" name="image" />
+              <input id="url_image" type="text" name="imageURL">
               <img id='blah' src='#' alt="your image"/>
               <input type="submit" value="Upload" />
           </form>
@@ -22,6 +24,8 @@
               <img id="uploaded_image">
           </div>
           <img id="uploaded_image" src="random_image.jpg" />
+          <iframe id="youriframe" width="640" height="360" ></iframe>
+          
           
 
 
@@ -71,11 +75,54 @@ function readURL(input) {
     }
 }
 
-$('#id_iamge').change(function() {
-  console.log('halo')
+$('#id_image').change(function() {
+  var image = document.getElementById("id_image").value
   readURL(this)
+    var formData = new FormData();
+    var imagefile = document.querySelector('#id_image');
+    console.log(imagefile)
+    formData.append("image", imagefile.files[0]);
+    console.log(formData)
+        // axios.post('http://localhost:3000/api/watson', formData, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data'
+        //     }
+        // })
+        // .then(function (response) {
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
   // return false
 })
+$('#url_image').change(function() {
+    var imageURL = document.getElementById("url_image").value
+    readURL(this)
+    axios.post('http://localhost:3000/api/watson', {
+        image_url: imageURL
+    })
+    .then(function (response) {
+        console.log(response);
+        console.log(response.data.class)
+        var foodName = response.data.class
+        go_get(foodName)
+        document.getElementById("foodName").innerHTML = foodName;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  // return false
+})
+
+function go_get(name){
+     var base_url = 'http://www.youtube.com/embed?listType=search&list=';
+     var search_field = name;
+     var target_url = base_url + search_field ;
+     var ifr = document.getElementById('youriframe') ;
+     ifr.src = target_url ;
+     return false ;
+    }
 
 // $('#myfile').change(function(){
         //   $('#path').val($(this).val())
