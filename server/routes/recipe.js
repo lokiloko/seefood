@@ -4,6 +4,7 @@ const RecipeCtrl = require('../controllers/recipe.js')
 
 /* GET home page. */
 router.get('/:foodname', function(req, res, next) {
+  console.log('AHLOOOOOOOOOOOOSAJDLKJSAKNDMALSDKNSKFJASFLBSADAKJSAKFB')
   RecipeCtrl.getListRecipeByName(req, res)
   //res.send('recipe')
 });
