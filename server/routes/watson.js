@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors')
 var router = express.Router();
 const WatsonCtrl = require('../controllers/watson.js')
 var multer = require('multer')
@@ -15,6 +16,7 @@ var upload = multer({
   storage: storage
 })
 /* GET home page. */
+router.use(cors())
 router.post('/', upload.single('image_files'), WatsonCtrl.analyzeFood)
 
 module.exports = router;
